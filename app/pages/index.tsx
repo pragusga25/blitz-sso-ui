@@ -1,9 +1,11 @@
 import { Suspense } from "react"
-import { Image, Link, BlitzPage, useMutation, Routes } from "blitz"
+import { Image, Link, BlitzPage, useMutation, Routes, Router } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import logout from "app/auth/mutations/logout"
+import { sso } from "../auth/sso"
 import logo from "public/logo.png"
+// import got from "got"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -13,6 +15,10 @@ import logo from "public/logo.png"
 const UserInfo = () => {
   const currentUser = useCurrentUser()
   const [logoutMutation] = useMutation(logout)
+
+  const loginSSO = async () => {
+    sso()
+  }
 
   if (currentUser) {
     return (
@@ -35,16 +41,9 @@ const UserInfo = () => {
   } else {
     return (
       <>
-        <Link href={Routes.SignupPage()}>
-          <a className="button small">
-            <strong>Sign Up</strong>
-          </a>
-        </Link>
-        <Link href={Routes.LoginPage()}>
-          <a className="button small">
-            <strong>Login</strong>
-          </a>
-        </Link>
+        <button className="button small" onClick={loginSSO}>
+          Login with sso ui
+        </button>
       </>
     )
   }
