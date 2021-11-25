@@ -9,6 +9,9 @@ const handler: BlitzApiHandler = async (req, res) => {
   const ticket = req.query["ticket"]
 
   const session = await getSession(req, res)
+
+  if (session.userId) return res.status(404).redirect("/").end()
+
   try {
     const parser = new XMLParser()
 
